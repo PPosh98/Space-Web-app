@@ -1,3 +1,19 @@
+@font-face {
+    font-family: 'spaceFont';
+    src: url('fonts/spaceFont.ttf') format('truetype');
+}
+
 body {
     margin: 0;
+}
+
+#title-container {
+    
+}
+
+#title {
+    margin: 4px;
+    font-size: 28px;
+    text-align: center;
+    font-family: 'spaceFont', sans-serif;
 }
