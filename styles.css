@@ -7,11 +7,15 @@ body {
     margin: 0;
 }
 
-#title-container {
-    
+#navbar {
+    overflow: hidden;
+    background-color: white;
+    position: fixed;
+    top: 0;
+    width: 100%;
 }
 
-#title {
+#navbar-title {
     margin: 4px;
     font-size: 28px;
     text-align: center;
