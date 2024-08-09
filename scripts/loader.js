@@ -30,4 +30,9 @@ export function loadModels() {
         scale: [0.25, 0.25, 0.25],
         position: [200, 0, 0]
     })
+    //Loading Earth
+    modelLoader('models/earth/earth.gltf', {
+        scale: [0.1, 0.1, 0.1],
+        position: [280, 0, 0]
+    })
 }
