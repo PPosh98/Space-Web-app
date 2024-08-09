@@ -83,9 +83,9 @@ function onKeyUp(event) {
 export function updateControls() {
     if (controls.isLocked) {
         const delta = clock.getDelta();
-        velocity.x -= velocity.x * 10.0 * delta;
-        velocity.y -= velocity.y * 10.0 * delta;
-        velocity.z -= velocity.z * 10.0 * delta;
+        velocity.x -= velocity.x * 1.0 * delta;
+        velocity.y -= velocity.y * 1.0 * delta;
+        velocity.z -= velocity.z * 1.0 * delta;
 
         direction.z = Number(moveForward) - Number(moveBackward);
         direction.x = Number(moveRight) - Number(moveLeft);

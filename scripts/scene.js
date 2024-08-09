@@ -13,7 +13,7 @@ renderer.setAnimationLoop(animate);
 document.body.appendChild(renderer.domElement);
 scene.add(ambientLight);
 
-camera.position.set(0, 0, 200)
+camera.position.set(300, 300, 500)
 
 export function initScene() {
     // Any additional scene setup can go here
