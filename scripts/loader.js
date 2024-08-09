@@ -60,4 +60,9 @@ export function loadModels() {
         scale: [0.1, 0.1, 0.1],
         position: [550, 0, 0]
     })
+    //loaded Moon
+    modelLoader('models/moon/moon.gltf', {
+        scale: [0.01, 0.01, 0.01],
+        position: [310, 0, 0]
+    })
 }
