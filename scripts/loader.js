@@ -5,7 +5,7 @@ import { scene } from './scene.js';
 const loader = new GLTFLoader();
 let currentDiameter;
 function modelLoader(url, options = {}) {
-    const { position = [0, 0, 0], desiredDiameter } = options;
+    const { position = [0, 0, 0], desiredDiameter, orbitRadius = 0, orbitSpeed = 0 } = options;
     loader.load(url, function (gltf) {
         const model = gltf.scene
         const box = new THREE.Box3().setFromObject(model);
@@ -18,6 +18,10 @@ function modelLoader(url, options = {}) {
         model.scale.set(scaleFactor, scaleFactor, scaleFactor);
         model.position.set(...position);
         scene.add(model);
+        // store orbit properties
+        model.userData.orbitRadius = orbitRadius;
+        model.userData.orbitSpeed = orbitSpeed;
+        console.log(model.userData)
     }, undefined, function (error) {
         console.error(error);
     });
@@ -26,12 +30,14 @@ export function loadModels() {
     //Loading sun
     modelLoader('models/sun/scene.gltf', {
         position: [0, 0, 0],
-        desiredDiameter: 500
+        desiredDiameter: 500,
     });
     //Loading Mercury
     modelLoader('models/mercury/mercury.gltf', {
         position: [340, 0, 0],
-        desiredDiameter: 1.52
+        desiredDiameter: 1.52,
+        orbitRadius: 340,
+        orbitSpeed: 5
     });
     //Loading Venus
     modelLoader('models/venus/venus.gltf', {
