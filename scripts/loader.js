@@ -45,4 +45,9 @@ export function loadModels() {
         scale: [0.1, 0.1, 0.1],
         position: [400, 0, 0]
     })
+    //Loaded Saturn
+    modelLoader('models/saturn/saturn.gltf', {
+        scale: [0.1, 0.1, 0.1],
+        position: [450, 0, 0]
+    })
 }
