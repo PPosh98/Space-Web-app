@@ -17,7 +17,12 @@ export function loadModels() {
     console.log('Hello')
     //Loading sun
     modelLoader('models/sun/scene.gltf', {
-        scale: [1, 1, 1],
+        scale: [5, 5, 5],
         position: [0, 0, 0]
+    });
+    //Loading Mercury
+    modelLoader('models/mercury/mercury.gltf', {
+        scale: [0.1, 0.1, 0.1],
+        position: [120, 0, 0]
     });
 }
