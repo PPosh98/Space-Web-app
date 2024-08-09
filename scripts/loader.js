@@ -35,4 +35,9 @@ export function loadModels() {
         scale: [0.1, 0.1, 0.1],
         position: [280, 0, 0]
     })
+    //Loading Mars
+    modelLoader('models/mars/mars.gltf', {
+        scale: [0.1, 0.1, 0.1],
+        position: [330, 0, 0]
+    })
 }
