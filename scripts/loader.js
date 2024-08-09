@@ -55,4 +55,9 @@ export function loadModels() {
         scale: [0.1, 0.1, 0.1],
         position: [500, 0, 0]
     })
+    //loaded Neptune
+    modelLoader('models/neptune/neptune.gltf', {
+        scale: [0.1, 0.1, 0.1],
+        position: [550, 0, 0]
+    })
 }
