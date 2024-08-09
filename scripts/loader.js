@@ -25,4 +25,9 @@ export function loadModels() {
         scale: [0.1, 0.1, 0.1],
         position: [120, 0, 0]
     });
+    //Loading Venus
+    modelLoader('models/venus/venus.gltf', {
+        scale: [0.25, 0.25, 0.25],
+        position: [200, 0, 0]
+    })
 }
