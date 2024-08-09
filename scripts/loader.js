@@ -40,4 +40,9 @@ export function loadModels() {
         scale: [0.1, 0.1, 0.1],
         position: [330, 0, 0]
     })
+    //Loaded Jupiter
+    modelLoader('models/jupiter/jupiter.gltf', {
+        scale: [0.1, 0.1, 0.1],
+        position: [400, 0, 0]
+    })
 }
