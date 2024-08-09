@@ -50,4 +50,9 @@ export function loadModels() {
         scale: [0.1, 0.1, 0.1],
         position: [450, 0, 0]
     })
+    //loaded Uranus
+    modelLoader('models/uranus/scene.gltf', {
+        scale: [0.1, 0.1, 0.1],
+        position: [500, 0, 0]
+    })
 }
