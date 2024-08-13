@@ -6,13 +6,9 @@ export const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
 scene.add(ambientLight);
 
-export const renderer = new THREE.WebGLRenderer();
+export const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 scene.add(ambientLight);
 
 camera.position.set(300, 300, 500)
-
-export function initScene() {
-    // Any additional scene setup can go here
-}
