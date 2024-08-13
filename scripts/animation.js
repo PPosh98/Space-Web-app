@@ -2,6 +2,8 @@ import { renderer, scene, camera } from './scene.js';
 import { updateControls } from './controls.js';
 import * as THREE from 'three';
 import { models } from './loader.js';
+import { stars } from './loader.js';
+
 
 export function animation() {
     renderer.setAnimationLoop(animate);
@@ -10,6 +12,9 @@ export function animation() {
 function animate() {
     updateControls();
     orbit()
+    stars.rotation.x += 0.000015;
+    stars.rotation.y += 0.000015;
+    stars.rotation.z += 0.000015;
     renderer.render(scene, camera);
 }
 
@@ -21,7 +26,7 @@ function orbit() {
 
         // Find the target model by its name
         const target = models.find(m => m.name == targetName);
-    
+
         if (target) {
             console.log(target)
             const targetPosition = target.position;
