@@ -1,10 +1,27 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { scene } from './scene.js';
+import { scene, camera } from './scene.js'; // Assuming you have camera and renderer exported from your scene module
 
 const loader = new GLTFLoader();
 export const models = []; // Array to store loaded models for animation
-export let stars
+export let stars;
+
+const raycaster = new THREE.Raycaster();
+
+function onMouseClick() {
+
+    // Set raycaster from the camera's position and direction
+    raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
+
+    // Calculate objects intersecting the picking ray
+    const intersects = raycaster.intersectObjects(models);
+
+    if (intersects.length > 0) {
+        const clickedModel = intersects[0].object;
+        console.log(`Clicked on model: ${clickedModel.name}`);
+        // Perform any action here, e.g., show details, highlight, etc.
+    }
+}
 
 function loadModel(url, options = {}) {
     const { position = [0, 0, 0], desiredDiameter, orbitRadius = 0, orbitSpeed = 0, name, targetName } = options;
@@ -83,3 +100,5 @@ export function loadModels() {
     loadPlanetaryModels();
     stars = createStars();
 }
+
+window.addEventListener('click', onMouseClick, false);
