@@ -14,11 +14,13 @@ function onMouseClick() {
     raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
 
     // Calculate objects intersecting the picking ray
-    const intersects = raycaster.intersectObjects(models);
+    const intersects = raycaster.intersectObjects(scene.children, true);
+
+    // console.log(intersects)
 
     if (intersects.length > 0) {
         const clickedModel = intersects[0].object;
-        console.log(`Clicked on model: ${clickedModel.name}`);
+        console.log(`Clicked on model: ${clickedModel.userData.position}`);
         // Perform any action here, e.g., show details, highlight, etc.
     }
 }
@@ -39,17 +41,25 @@ function loadModel(url, options = {}) {
             model.scale.set(scaleFactor, scaleFactor, scaleFactor);
             model.position.set(...position);
 
-            model.userData = {
-                orbitRadius: orbitRadius + desiredDiameter / 2,
-                orbitSpeed,
-                targetName,
-                name,
-            };
+            model.traverse((child) => {
+                if (child.isMesh) {
+                    child.userData = { ...child.userData, position, orbitRadius, orbitSpeed, targetName, name };
+                    child.name = name;  // Set the name on all meshes
+                }
+            });
 
-            model.name = name;
+            // model.userData = {
+            //     orbitRadius: orbitRadius + desiredDiameter / 2,
+            //     orbitSpeed,
+            //     targetName,
+            //     name,
+            // };
+
+            // model.name = name;
 
             scene.add(model);
             models.push(model);
+
         },
         undefined,
         (error) => {
