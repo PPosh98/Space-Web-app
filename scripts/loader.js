@@ -20,7 +20,15 @@ function onMouseClick() {
 
     if (intersects.length > 0) {
         const clickedModel = intersects[0].object;
-        console.log(`Clicked on model: ${clickedModel.userData.position}`);
+        // Get the bounding box of the clicked model
+        const boundingBox = new THREE.Box3().setFromObject(clickedModel);
+        const size = boundingBox.getSize(new THREE.Vector3());
+        const diameter = Math.max(size.x, size.y, size.z);
+        // Adjust the camera position
+        console.log(clickedModel.userData.position);
+        camera.position.set(clickedModel.userData.position[0] + diameter, clickedModel.userData.position[1] + diameter / 2, clickedModel.userData.position[2] + diameter)
+        camera.lookAt(...clickedModel.userData.position);
+        console.log(camera.position)
         // Perform any action here, e.g., show details, highlight, etc.
     }
 }
@@ -42,10 +50,9 @@ function loadModel(url, options = {}) {
             model.position.set(...position);
 
             model.traverse((child) => {
-                if (child.isMesh) {
-                    child.userData = { ...child.userData, position, orbitRadius, orbitSpeed, targetName, name };
-                    child.name = name;  // Set the name on all meshes
-                }
+                child.userData = { ...child.userData, position, orbitRadius, orbitSpeed, targetName, name };
+                child.name = name;  // Set the name on all meshes
+
             });
 
             // model.userData = {
@@ -79,7 +86,7 @@ function loadPlanetaryModels() {
         { url: 'models/saturn/saturn.gltf', options: { position: [738, 0, 0], desiredDiameter: 40.9, orbitRadius: 738, orbitSpeed: 0, name: 'Saturn', targetName: 'Sun' } },
         { url: 'models/uranus/scene.gltf', options: { position: [815, 0, 0], desiredDiameter: 18.2, orbitRadius: 815, orbitSpeed: 0, name: 'Uranus', targetName: 'Sun' } },
         { url: 'models/neptune/neptune.gltf', options: { position: [875, 0, 0], desiredDiameter: 10.7, orbitRadius: 875, orbitSpeed: 0, name: 'Neptune', targetName: 'Sun' } },
-        { url: 'models/moon/moon.gltf', options: { position: [525, 0, 0], desiredDiameter: 1.14, orbitRadius: 5, orbitSpeed: 1, name: 'Moon', targetName: 'Earth' } },
+        { url: 'models/moon/moon.gltf', options: { position: [525, 0, 0], desiredDiameter: 1.14, orbitRadius: 5, orbitSpeed: 5, name: 'Moon', targetName: 'Earth' } },
         { url: 'models/pluto/scene.gltf', options: { position: [935, 0, 0], desiredDiameter: 0.9, orbitRadius: 935, orbitSpeed: 0, name: 'Pluto', targetName: 'Sun' } },
     ];
 

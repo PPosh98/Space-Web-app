@@ -12,3 +12,4 @@ document.body.appendChild(renderer.domElement);
 scene.add(ambientLight);
 
 camera.position.set(300, 300, 500)
+console.log(camera.position)
