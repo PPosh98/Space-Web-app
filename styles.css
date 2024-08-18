@@ -6,15 +6,40 @@ body {
     position: fixed;
     top: 50%;
     left: 50%;
-    width: 20px; /* Length of the cross arms */
-    height: 20px; /* Length of the cross arms */
-    margin-left: -10px; /* Half of the width */
-    margin-top: -10px;  /* Half of the height */
-    background: 
-        linear-gradient(white, white) 50% 0 / 2px 100%, /* Vertical line */
-        linear-gradient(white, white) 0 50% / 100% 2px; /* Horizontal line */
+    width: 20px;
+    /* Length of the cross arms */
+    height: 20px;
+    /* Length of the cross arms */
+    margin-left: -10px;
+    /* Half of the width */
+    margin-top: -10px;
+    /* Half of the height */
+    background:
+        linear-gradient(white, white) 50% 0 / 2px 100%,
+        /* Vertical line */
+        linear-gradient(white, white) 0 50% / 100% 2px;
+    /* Horizontal line */
     background-repeat: no-repeat;
     pointer-events: none;
     z-index: 10;
 }
 
+.properties-box {
+    position: absolute;
+    border: 2px solid silver;
+    background-color: rgba(51, 51, 51, 0.8);
+    /* Dark grey with transparency */
+    color: silver;
+    padding: 10px;
+    border-radius: 5px;
+    display: none;
+    /* Initially hidden */
+}
+
+canvas {
+    display: block;
+    width: 100vw !important;
+    height: 100vh !important;
+
+    /* fix necessary to remove space at bottom of canvas */
+}

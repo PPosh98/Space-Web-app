@@ -5,11 +5,12 @@ import { scene, camera } from './scene.js'; // Assuming you have camera and rend
 const loader = new GLTFLoader();
 export const models = []; // Array to store loaded models for animation
 export let stars;
+export let clickedModel = null;
+export let diameter = 0;
 
 const raycaster = new THREE.Raycaster();
 
 function onMouseClick() {
-
     // Set raycaster from the camera's position and direction
     raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
 
@@ -19,18 +20,20 @@ function onMouseClick() {
     // console.log(intersects)
 
     if (intersects.length > 0) {
-        const clickedModel = intersects[0].object;
+        clickedModel = intersects[0].object;
+        console.log(clickedModel.userData)
         // Get the bounding box of the clicked model
         const boundingBox = new THREE.Box3().setFromObject(clickedModel);
         const size = boundingBox.getSize(new THREE.Vector3());
-        const diameter = Math.max(size.x, size.y, size.z);
-        // Adjust the camera position
-        console.log(clickedModel.userData.position);
+        diameter = Math.max(size.x, size.y, size.z);
         camera.position.set(clickedModel.userData.position[0] + diameter, clickedModel.userData.position[1] + diameter / 2, clickedModel.userData.position[2] + diameter)
         camera.lookAt(...clickedModel.userData.position);
-        console.log(camera.position)
         // Perform any action here, e.g., show details, highlight, etc.
     }
+}
+
+export function nullifyclickedModel() {
+    clickedModel = null;
 }
 
 function loadModel(url, options = {}) {
@@ -75,6 +78,16 @@ function loadModel(url, options = {}) {
     );
 }
 
+export function updateModelPositions() {
+    models.forEach((model) => {
+        model.traverse((child) => {
+            const worldPosition = new THREE.Vector3();
+            child.getWorldPosition(worldPosition);
+            child.userData.position = worldPosition;
+        });
+    });
+}
+
 function loadPlanetaryModels() {
     const planets = [
         { url: 'models/sun/scene.gltf', options: { position: [0, 0, 0], desiredDiameter: 500, name: 'Sun' } },
@@ -82,7 +95,7 @@ function loadPlanetaryModels() {
         { url: 'models/venus/venus.gltf', options: { position: [435, 0, 0], desiredDiameter: 4.32, orbitRadius: 435, orbitSpeed: 0, name: 'Venus', targetName: 'Sun' } },
         { url: 'models/earth/earth.gltf', options: { position: [520, 0, 0], desiredDiameter: 4.55, orbitRadius: 520, orbitSpeed: 0, name: 'Earth', targetName: 'Sun' } },
         { url: 'models/mars/mars.gltf', options: { position: [580, 0, 0], desiredDiameter: 2.28, orbitRadius: 580, orbitSpeed: 0, name: 'Mars', targetName: 'Sun' } },
-        { url: 'models/jupiter/jupiter.gltf', options: { position: [655, 0, 0], desiredDiameter: 50, orbitRadius: 655, orbitSpeed: 0, name: 'Jupiter', targetName: 'Sun' } },
+        { url: 'models/jupiter/jupiter.gltf', options: { position: [655, 0, 0], desiredDiameter: 50, orbitRadius: 655, orbitSpeed: 0.1, name: 'Jupiter', targetName: 'Sun' } },
         { url: 'models/saturn/saturn.gltf', options: { position: [738, 0, 0], desiredDiameter: 40.9, orbitRadius: 738, orbitSpeed: 0, name: 'Saturn', targetName: 'Sun' } },
         { url: 'models/uranus/scene.gltf', options: { position: [815, 0, 0], desiredDiameter: 18.2, orbitRadius: 815, orbitSpeed: 0, name: 'Uranus', targetName: 'Sun' } },
         { url: 'models/neptune/neptune.gltf', options: { position: [875, 0, 0], desiredDiameter: 10.7, orbitRadius: 875, orbitSpeed: 0, name: 'Neptune', targetName: 'Sun' } },
