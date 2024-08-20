@@ -26,11 +26,10 @@ body {
 
 .properties-box {
     position: absolute;
-    border: 2px solid silver;
     background-color: rgba(51, 51, 51, 0.8);
     /* Dark grey with transparency */
     color: silver;
-    padding: 10px;
+    padding: 0px 10px;
     border-radius: 5px;
     display: none;
     /* Initially hidden */
@@ -42,4 +41,24 @@ canvas {
     height: 100vh !important;
 
     /* fix necessary to remove space at bottom of canvas */
+}
+
+#sidebar {
+    height: calc(100% -40px);
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    right: 0;
+    color: white;
+    transition: 0.25s;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    background-color: rgba(52, 61, 70, 0.5);
+    top: 20px;
+    bottom: 20px;
+}
+
+#sidebar-header {
+    text-align: center;
+    opacity: 1;
 }
