@@ -15,13 +15,12 @@ function onMouseClick() {
     raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
 
     // Calculate objects intersecting the picking ray
-    const intersects = raycaster.intersectObjects(scene.children, true);
+    const intersects = raycaster.intersectObjects(models, true);
 
     // console.log(intersects)
 
     if (intersects.length > 0) {
         clickedModel = intersects[0].object;
-        console.log(clickedModel.userData)
         // Get the bounding box of the clicked model
         const boundingBox = new THREE.Box3().setFromObject(clickedModel);
         const size = boundingBox.getSize(new THREE.Vector3());
@@ -37,7 +36,7 @@ export function nullifyclickedModel() {
 }
 
 function loadModel(url, options = {}) {
-    const { position = [0, 0, 0], desiredDiameter, orbitRadius = 0, orbitSpeed = 0, name, targetName } = options;
+    const { position = [0, 0, 0], desiredDiameter, orbitRadius = 0, orbitSpeed = 0, name, targetName = 'none' } = options;
 
     loader.load(
         url,
@@ -53,7 +52,7 @@ function loadModel(url, options = {}) {
             model.position.set(...position);
 
             model.traverse((child) => {
-                child.userData = { ...child.userData, position, orbitRadius, orbitSpeed, targetName, name };
+                child.userData = { ...child.userData, position, orbitRadius, orbitSpeed, targetName, name, desiredDiameter };
                 child.name = name;  // Set the name on all meshes
 
             });

@@ -87,37 +87,37 @@ document.addEventListener('keydown', toggleCameraFollow);
 
 function showProperties(model, mode) {
     if (model != null) {
-        let objectName = model.userData.name;
-        let objectRadius = model.userData.orbitRadius;
-        let objectSpeed = model.userData.orbitSpeed;
-        let objectPosition = model.userData.position;
+        const objectName = model.userData.name;
+        const objectRadius = model.userData.orbitRadius;
+        const objectSpeed = model.userData.orbitSpeed;
+        const objectTargetName = model.userData.targetName;
+        const objectSize = model.userData.desiredDiameter
+        const objectPosition = model.userData.position;
+        const fixedPosition = objectPosition.toArray().map(value => value.toFixed(2));
         let propertiesHTML = `<p> Name: ${objectName} </p>`;
         if (mode === 'simple') {
             propertiesElement.innerHTML = propertiesHTML;
             propertiesElement.style.display = 'block'; // Show the properties box
         }
         if (mode === 'complex') {
-            if (mode === 'complex') {
-                propertiesHTML = `
-                    <p> <p> Name: ${objectName} </p>
+            propertiesHTML = `
+                    <p> Name: ${objectName} </p>
                     <p> Orbit Radius: ${objectRadius} </p>
                     <p> Orbit Speed: ${objectSpeed} </p>
-                    <p> Position: ${objectPosition} </p>`;
-                information.innerHTML = propertiesHTML;
-
-            }
-
+                    <p> Position: ${fixedPosition} </p>
+                    <p> Orbiting: ${objectTargetName} </p>
+                    <p> Size: ${objectSize}k km </p>`
+            information.innerHTML = propertiesHTML;
         }
     }
 }
 
 
 
+
 function updatePropertiesPosition(model) {
     if (model != null) {
-        console.log(model.userData.position.x)
-        const objectPosition = model.userData.position;
-
+        const objectPosition = model.userData.position
         // Convert 3D position to 2D screen position
         const vector = new THREE.Vector3(objectPosition.x, objectPosition.y, objectPosition.z);
         vector.project(camera);
@@ -152,9 +152,8 @@ function onPointerMove(event) {
 
 function openSidebar() {
     sidebar.style.width = "250px";
-    //showProperties(clickedModel, 'complex')
+    showProperties(clickedModel, 'complex')
 
 }
 
 document.addEventListener('pointermove', onPointerMove);
-document.addEventListener('click', updatePropertiesPosition);
