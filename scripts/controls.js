@@ -11,6 +11,14 @@ export function initControls() {
         controls.lock();
     });
 
+    controls.addEventListener('lock', () => {
+        document.getElementById('crosshair').style.display = 'block';
+    });
+
+    controls.addEventListener('unlock', () => {
+        document.getElementById('crosshair').style.display = 'none';
+    });
+
     document.addEventListener('keydown', onKeyDown);
     document.addEventListener('keyup', onKeyUp);
 }

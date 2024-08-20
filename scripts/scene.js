@@ -10,5 +10,5 @@ export const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 scene.add(ambientLight);
-
 camera.position.set(300, 300, 500)
+console.log(camera.position)
