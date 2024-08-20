@@ -100,18 +100,28 @@ function showProperties(model, mode) {
             propertiesElement.style.display = 'block'; // Show the properties box
         }
         if (mode === 'complex') {
-            propertiesHTML = `
-                    <p> Name: ${objectName} </p>
-                    <p> Orbit Radius: ${objectRadius} </p>
-                    <p> Orbit Speed: ${objectSpeed} </p>
-                    <p> Position: ${fixedPosition} </p>
-                    <p> Orbiting: ${objectTargetName} </p>
-                    <p> Size: ${objectSize}k km </p>`
-            information.innerHTML = propertiesHTML;
+            let informationHTML = `
+                <p> Name: <input type="text" id="nameInput" value="${objectName}"> </p>
+                <p> Orbit Radius: <input type="range" id="radiusSlider" min="0" max="1000" value="${objectRadius}" oninput="updateValue('radiusValue', this.value)"> <input type="text" id="radiusValue" value="${objectRadius}"> </p>
+                <p> Orbit Speed: <input type="range" id="speedSlider" min="0" max="100" value="${objectSpeed}" oninput="updateValue('speedValue', this.value)"> <input type="text" id="speedValue" value="${objectSpeed}"> </p>
+                <p> Position: ${fixedPosition} </p>
+                <p> Orbiting: <input type="text" id="targetNameInput" value="${objectTargetName}"> </p>
+                <p> Size: <input type="range" id="sizeSlider" min="0" max="100" value="${objectSize}" oninput="updateValue('sizeValue', this.value)"> <input type="text" id="sizeValue" value="${objectSize}">k km </p>`;
+            information.innerHTML = informationHTML;
         }
     }
 }
 
+function updateValue(id, value) {
+    document.getElementById(id).value = value;
+}
+
+// Ensure the elements are updated correctly
+document.addEventListener('input', function (event) {
+    if (event.target.matches('input[type="range"]')) {
+        updateValue(event.target.nextElementSibling.id, event.target.value);
+    }
+});
 
 
 
