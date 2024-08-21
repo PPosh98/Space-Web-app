@@ -1,14 +1,21 @@
 import * as THREE from 'three';
 import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
 import { camera } from './scene.js';
+import { onMouseClick } from './loader.js';
 
 export let controls;
 
 export function initControls() {
     controls = new PointerLockControls(camera, document.body);
 
-    document.addEventListener('click', () => {
-        controls.lock();
+    document.addEventListener('click', (event) => {
+        // Check if the click was on the Three.js canvas element
+        console.log(event.target.tagName.toLowerCase())
+        if (event.target.tagName.toLowerCase() === 'canvas') {
+            console.log("hello")
+            controls.lock();
+        }
+        onMouseClick();
     });
 
     controls.addEventListener('lock', () => {
@@ -84,7 +91,6 @@ function onKeyUp(event) {
         case 'ControlLeft':
             moveDown = false;
             break;
-
     }
 }
 
@@ -108,4 +114,17 @@ export function updateControls() {
         controls.getObject().position.y -= velocity.y * delta;
         controls.moveForward(-velocity.z * delta);
     }
+}
+
+export function getMousePosition() {
+    let mouse
+    if (controls.isLocked) {
+        mouse = new THREE.Vector2(0, 0)
+    }
+    else {
+        mouse = new THREE.Vector2();
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    }
+    return mouse
 }

@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { scene, camera } from './scene.js'; // Assuming you have camera and renderer exported from your scene module
+import { scene, camera } from './scene.js';
+import { setCameraFollowEnabled } from './camera.js';
+import { controls, getMousePosition } from './controls.js';
 
 const loader = new GLTFLoader();
 export const models = []; // Array to store loaded models for animation
@@ -10,24 +12,19 @@ export let diameter = 0;
 
 const raycaster = new THREE.Raycaster();
 
-function onMouseClick() {
+export function onMouseClick() {
     // Set raycaster from the camera's position and direction
-    raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
+    raycaster.setFromCamera(getMousePosition(), camera);
 
     // Calculate objects intersecting the picking ray
     const intersects = raycaster.intersectObjects(models, true);
-
-    // console.log(intersects)
-
     if (intersects.length > 0) {
         clickedModel = intersects[0].object;
         // Get the bounding box of the clicked model
         const boundingBox = new THREE.Box3().setFromObject(clickedModel);
         const size = boundingBox.getSize(new THREE.Vector3());
         diameter = Math.max(size.x, size.y, size.z);
-        camera.position.set(clickedModel.userData.position[0] + diameter, clickedModel.userData.position[1] + diameter / 2, clickedModel.userData.position[2] + diameter)
-        camera.lookAt(...clickedModel.userData.position);
-        // Perform any action here, e.g., show details, highlight, etc.
+        setCameraFollowEnabled(true)
     }
 }
 
@@ -53,18 +50,8 @@ function loadModel(url, options = {}) {
 
             model.traverse((child) => {
                 child.userData = { ...child.userData, position, orbitRadius, orbitSpeed, targetName, name, desiredDiameter };
-                child.name = name;  // Set the name on all meshes
-
+                child.name = name;
             });
-
-            // model.userData = {
-            //     orbitRadius: orbitRadius + desiredDiameter / 2,
-            //     orbitSpeed,
-            //     targetName,
-            //     name,
-            // };
-
-            // model.name = name;
 
             scene.add(model);
             models.push(model);
@@ -130,4 +117,4 @@ export function loadModels() {
     stars = createStars();
 }
 
-window.addEventListener('click', onMouseClick, false);
+// document.addEventListener('click', onMouseClick, false);
