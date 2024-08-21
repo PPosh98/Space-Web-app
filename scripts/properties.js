@@ -3,9 +3,9 @@ import { camera } from './scene.js';
 import { clickedModel } from './loader.js';
 
 const sidebar = document.getElementById('sidebar');
+const planet_name = document.getElementById("planet-name-container")
 
 export function showProperties(model, mode) {
-    const propertiesElement = document.getElementById('planet-properties');
     const information = document.getElementById('information');
 
     if (model !== null) {
@@ -13,8 +13,8 @@ export function showProperties(model, mode) {
         const fixedPosition = position.toArray().map(value => value.toFixed(2));
         
         if (mode === 'simple') {
-            propertiesElement.innerHTML = `<p>Name: ${name}</p>`;
-            propertiesElement.style.display = 'block'; // Show the properties box
+            planet_name.innerHTML = `<p>Name: ${name}</p>`;
+            planet_name.style.display = 'block'; // Show the properties box
         } else if (mode === 'complex') {
             let informationHTML = `
                 <p>Name: <input type="text" id="nameInput" value="${name}"></p>
@@ -29,7 +29,6 @@ export function showProperties(model, mode) {
 }
 
 export function updatePropertiesPosition(model) {
-    const propertiesElement = document.getElementById('planet-properties');
 
     if (model !== null) {
         const objectPosition = model.userData.position;
@@ -42,9 +41,9 @@ export function updatePropertiesPosition(model) {
         const x = (vector.x * widthHalf) + widthHalf;
         const y = -(vector.y * heightHalf) + heightHalf;
 
-        propertiesElement.style.left = `${x - 10}px`; // Adjust position slightly to the right
-        propertiesElement.style.top = `${y}px`;
-        propertiesElement.style.display = 'block';
+        planet_name.style.left = `${x - 10}px`; // Adjust position slightly to the right
+        planet_name.style.top = `${y}px`;
+        planet_name.style.display = 'block';
     }
 }
 

@@ -24,7 +24,7 @@ body {
     z-index: 10;
 }
 
-.properties-box {
+#planet-name-container {
     position: absolute;
     background-color: rgba(51, 51, 51, 0.8);
     /* Dark grey with transparency */

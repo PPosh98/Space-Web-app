@@ -7,10 +7,6 @@ export let cameraFollowEnabled = false;
 
 export function cameraFollow() {
     if (clickedModel !== null && cameraFollowEnabled) {
-        document.getElementById('crosshair').style.display = 'none';
-        controls.unlock()
-        document.getElementById('planet-properties').style.display = 'none';
-        openSidebar();
         const targetPosition = clickedModel.userData.position;
         camera.position.set(
             targetPosition.x + diameter,
@@ -26,13 +22,13 @@ export function setCameraFollowEnabled(isEnabled) {
     else cameraFollowEnabled = false
 }
 
-export function toggleCameraFollow(event) {
-    if (event.key === 't') { // Change 't' to any key you prefer
-        controls.lock()
-        cameraFollowEnabled = !cameraFollowEnabled;
-        if (cameraFollowEnabled === false) {
-            nullifyclickedModel();
-            // closeSidebar()
-        }
-    }
-}
+// export function toggleCameraFollow(event) {
+//     if (event.key === 't') { // Change 't' to any key you prefer
+//         controls.lock()
+//         cameraFollowEnabled = !cameraFollowEnabled;
+//         if (cameraFollowEnabled === false) {
+//             nullifyclickedModel();
+//             // closeSidebar()
+//         }
+//     }
+// }

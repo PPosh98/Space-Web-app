@@ -16,6 +16,6 @@ export function onPointerMove() {
         showProperties(hoveredModel, 'simple');
         updatePropertiesPosition(hoveredModel);
     } else {
-        document.getElementById('planet-properties').style.display = 'none';
+        document.getElementById('planet-name-container').style.display = 'none';
     }
 }

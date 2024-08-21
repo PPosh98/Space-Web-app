@@ -3,6 +3,8 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { scene, camera } from './scene.js';
 import { setCameraFollowEnabled } from './camera.js';
 import { controls, getMousePosition } from './controls.js';
+import { closeSidebar, openSidebar, showProperties } from './properties.js';
+import { onPointerMove } from './interactions.js';
 
 const loader = new GLTFLoader();
 export const models = []; // Array to store loaded models for animation
@@ -20,6 +22,12 @@ export function onMouseClick() {
     const intersects = raycaster.intersectObjects(models, true);
     if (intersects.length > 0) {
         clickedModel = intersects[0].object;
+        document.getElementById('crosshair').style.display = 'none';
+        document.removeEventListener("pointermove", onPointerMove)
+        document.getElementById('planet-name-container').style.display = 'none';
+        openSidebar();
+        controls.unlock();
+        
         // Get the bounding box of the clicked model
         const boundingBox = new THREE.Box3().setFromObject(clickedModel);
         const size = boundingBox.getSize(new THREE.Vector3());

@@ -2,6 +2,9 @@ import * as THREE from 'three';
 import { PointerLockControls } from 'three/examples/jsm/controls/PointerLockControls.js';
 import { camera } from './scene.js';
 import { onMouseClick } from './loader.js';
+import { onPointerMove } from './interactions.js';
+import { setCameraFollowEnabled } from './camera.js';
+import { closeSidebar } from './properties.js';
 
 export let controls;
 
@@ -10,9 +13,7 @@ export function initControls() {
 
     document.addEventListener('click', (event) => {
         // Check if the click was on the Three.js canvas element
-        console.log(event.target.tagName.toLowerCase())
         if (event.target.tagName.toLowerCase() === 'canvas') {
-            console.log("hello")
             controls.lock();
         }
         onMouseClick();
@@ -20,6 +21,9 @@ export function initControls() {
 
     controls.addEventListener('lock', () => {
         document.getElementById('crosshair').style.display = 'block';
+        document.addEventListener("pointermove", onPointerMove)
+        setCameraFollowEnabled(false)
+        closeSidebar()
     });
 
     controls.addEventListener('unlock', () => {
