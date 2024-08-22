@@ -24,10 +24,10 @@ export function onMouseClick() {
         clickedModel = intersects[0].object;
         document.getElementById('crosshair').style.display = 'none';
         document.removeEventListener("pointermove", onPointerMove)
-        document.getElementById('planet-name-container').style.display = 'none';
         openSidebar();
+        document.getElementById('planet-name-container').style.display = 'none';
         controls.unlock();
-        
+
         // Get the bounding box of the clicked model
         const boundingBox = new THREE.Box3().setFromObject(clickedModel);
         const size = boundingBox.getSize(new THREE.Vector3());
