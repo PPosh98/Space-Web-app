@@ -41,7 +41,7 @@ export function nullifyclickedModel() {
 }
 
 function loadModel(url, options = {}) {
-    const { position = [0, 0, 0], desiredDiameter, orbitRadius = 0, orbitSpeed = 0, name, targetName = 'none' } = options;
+    const { position = [0, 0, 0], rotation = [0, 0, 0], desiredDiameter, orbitRadius = 0, orbitSpeed = 0, name, targetName = 'none' } = options;
 
     loader.load(
         url,
@@ -55,9 +55,17 @@ function loadModel(url, options = {}) {
 
             model.scale.set(scaleFactor, scaleFactor, scaleFactor);
             model.position.set(...position);
+            model.rotation.set(...rotation);
+
+            // // Set initial rotation in degrees
+            // model.rotation.set(
+            //     THREE.MathUtils.degToRad(rotation.x),
+            //     THREE.MathUtils.degToRad(rotation.y),
+            //     THREE.MathUtils.degToRad(rotation.z)
+            // );
 
             model.traverse((child) => {
-                child.userData = { ...child.userData, position, orbitRadius, orbitSpeed, targetName, name, desiredDiameter };
+                child.userData = { ...child.userData, position, orbitRadius, orbitSpeed, targetName, name, desiredDiameter, currentDiameter, scaleFactor, rotation };
                 child.name = name;
             });
 
@@ -89,7 +97,7 @@ function loadPlanetaryModels() {
         { url: 'models/venus/venus.gltf', options: { position: [435, 0, 0], desiredDiameter: 4.32, orbitRadius: 435, orbitSpeed: 0, name: 'Venus', targetName: 'Sun' } },
         { url: 'models/earth/earth.gltf', options: { position: [520, 0, 0], desiredDiameter: 4.55, orbitRadius: 520, orbitSpeed: 0, name: 'Earth', targetName: 'Sun' } },
         { url: 'models/mars/mars.gltf', options: { position: [580, 0, 0], desiredDiameter: 2.28, orbitRadius: 580, orbitSpeed: 0, name: 'Mars', targetName: 'Sun' } },
-        { url: 'models/jupiter/jupiter.gltf', options: { position: [655, 0, 0], desiredDiameter: 50, orbitRadius: 655, orbitSpeed: 0.1, name: 'Jupiter', targetName: 'Sun' } },
+        { url: 'models/jupiter/jupiter.gltf', options: { position: [655, 0, 0], rotation: [1, 1, 1], desiredDiameter: 50, orbitRadius: 655, orbitSpeed: 1, name: 'Jupiter', targetName: 'Sun' } },
         { url: 'models/saturn/saturn.gltf', options: { position: [738, 0, 0], desiredDiameter: 40.9, orbitRadius: 738, orbitSpeed: 0, name: 'Saturn', targetName: 'Sun' } },
         { url: 'models/uranus/scene.gltf', options: { position: [815, 0, 0], desiredDiameter: 18.2, orbitRadius: 815, orbitSpeed: 0, name: 'Uranus', targetName: 'Sun' } },
         { url: 'models/neptune/neptune.gltf', options: { position: [875, 0, 0], desiredDiameter: 10.7, orbitRadius: 875, orbitSpeed: 0, name: 'Neptune', targetName: 'Sun' } },
