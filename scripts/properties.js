@@ -32,8 +32,13 @@ export function showPlanetName(model) {
 export function showProperties(model) {
     if (model !== null) {
         // Generate options for the target dropdown
-        const targetOptions = models.map(m => `<option value="${m.userData.name}" ${m.userData.name === model.userData.targetName ? 'selected' : ''}>${m.userData.name}</option>`).join('');
-        console.log(targetOptions)
+        const targetOptions = [
+            `<option value="">None</option>`, // Adds a "None" option for no orbit
+            ...models
+                .filter(m => m.userData.name !== model.userData.name) // Excludes the clicked model
+                .map(m => `<option value="${m.userData.name}" ${m.userData.name === model.userData.targetName ? 'selected' : ''}>${m.userData.name}</option>`)
+        ].join('');
+
         name_input.value = model.userData.name
         radius_slider.value = model.userData.orbitRadius
         speed_slider.value = model.userData.orbitSpeed
@@ -56,21 +61,29 @@ export function showProperties(model) {
         rotationX_Slider.addEventListener('input', e => model.userData.rotation[0] = +e.target.value);
         rotationY_Slider.addEventListener('input', e => model.userData.rotation[1] = +e.target.value);
         rotationZ_Slider.addEventListener('input', e => model.userData.rotation[2] = +e.target.value);
-        size_slider.addEventListener('input', e => model.userData.desiredDiameter = +e.target.value);
-
+        //size_slider.addEventListener('input', e => model.userData.desiredDiameter = +e.target.value);
+        size_slider.addEventListener('input', (e) => {
+            const newDesiredDiameter = +e.target.value; // Get the new desired diameter from the slider
+            models.forEach((model) => {
+                if (clickedModel.userData.name === model.userData.name) {
+                    updateModelScale(model, newDesiredDiameter)
+                }
+            }); // Update all models or target specific ones
+            model.userData.desiredDiameter = +e.target.value;
+        });
         updatePositionLoop(model);
     }
 }
 
-// Helper function to recalculate and update the model's scale
-function updateModelScale(model) {
-    const box = new THREE.Box3().setFromObject(model);
-    const size = box.getSize(new THREE.Vector3());
-    const currentDiameter = Math.max(size.x, size.y, size.z);
-    const scaleFactor = model.userData.desiredDiameter / currentDiameter;
+// // Helper function to recalculate and update the model's scale
+// function updateModelScale(model) {
+//     const box = new THREE.Box3().setFromObject(model);
+//     const size = box.getSize(new THREE.Vector3());
+//     const currentDiameter = Math.max(size.x, size.y, size.z);
+//     const scaleFactor = model.userData.desiredDiameter / currentDiameter;
 
-    model.scale.set(scaleFactor, scaleFactor, scaleFactor);
-}
+//     model.scale.set(scaleFactor, scaleFactor, scaleFactor);
+// }
 
 function updatePositionLoop(model) {
     function update() {
@@ -85,6 +98,25 @@ function updatePositionLoop(model) {
     }
     update();
 }
+
+function updateModelScale(model, newDesiredDiameter) {
+    if (!model.userData.originalDiameter) {
+        console.error("Original model size is not set. Please initialize it properly.");
+        return;
+    }
+
+    const originalDiameter = model.userData.originalDiameter; // Retrieve the stored original size
+    const scaleFactor = newDesiredDiameter / originalDiameter; // Calculate new scale factor based on original size
+
+    // Reset scale to original state before applying new scaling
+    model.scale.set(1, 1, 1); // Reset scale to (1, 1, 1)
+    model.scale.multiplyScalar(scaleFactor); // Apply the new scale factor
+
+    // Update userData with new desired size
+    model.userData.desiredDiameter = newDesiredDiameter; // Update the desired diameter
+    model.userData.scaleFactor = scaleFactor; // Optionally store new scale factor
+}
+
 export function updatePlanetNamePosition(model) {
     if (model !== null) {
         const objectPosition = model.userData.position;

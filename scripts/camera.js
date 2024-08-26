@@ -1,7 +1,6 @@
 import { camera } from './scene.js';
-import { clickedModel, diameter, nullifyclickedModel } from './loader.js';
-import { openSidebar, closeSidebar } from './properties.js';
-import { controls } from './controls.js';
+import { clickedModel, diameter } from './loader.js';
+
 
 export let cameraFollowEnabled = false;
 

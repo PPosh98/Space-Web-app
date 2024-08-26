@@ -3,7 +3,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { scene, camera } from './scene.js';
 import { setCameraFollowEnabled } from './camera.js';
 import { controls, getMousePosition } from './controls.js';
-import { openSidebar } from './properties.js';
+import { closeSidebar, openSidebar, showProperties } from './properties.js';
 import { onPointerMove } from './interactions.js';
 
 const loader = new GLTFLoader();
@@ -21,9 +21,11 @@ export function onMouseClick() {
     // Calculate objects intersecting the picking ray
     const intersects = raycaster.intersectObjects(models, true);
     if (intersects.length > 0) {
-        clickedModel = intersects[0].object;
+        clickedModel = intersects[0].object; // Store the clicked model
+
+        // Hide UI elements and adjust controls as needed
         document.getElementById('crosshair').style.display = 'none';
-        document.removeEventListener("pointermove", onPointerMove)
+        document.removeEventListener("pointermove", onPointerMove);
         openSidebar();
         document.getElementById('planet-name-container').style.display = 'none';
         controls.unlock();
@@ -32,16 +34,19 @@ export function onMouseClick() {
         const boundingBox = new THREE.Box3().setFromObject(clickedModel);
         const size = boundingBox.getSize(new THREE.Vector3());
         diameter = Math.max(size.x, size.y, size.z);
-        setCameraFollowEnabled(true)
+
+        // Enable camera follow mode if necessary
+        setCameraFollowEnabled(true);
     }
 }
 
-export function nullifyclickedModel() {
+export function nullifyClickedModel() {
     clickedModel = null;
 }
 
+
 function loadModel(url, options = {}) {
-    const { position = [0, 0, 0], rotation = [0, 0, 0], desiredDiameter = 0, orbitRadius = 0, orbitSpeed = 0, name, targetName = 'none' } = options;
+    const { position = [0, 0, 0], rotation = [0, 0, 0], desiredDiameter, orbitRadius = 0, orbitSpeed = 0, name, targetName = 'None' } = options;
 
     loader.load(
         url,
@@ -50,21 +55,36 @@ function loadModel(url, options = {}) {
             const box = new THREE.Box3().setFromObject(model);
             const size = box.getSize(new THREE.Vector3());
 
-            const currentDiameter = Math.max(size.x, size.y, size.z);
-            const scaleFactor = desiredDiameter / currentDiameter;
+            const currentDiameter = Math.max(size.x, size.y, size.z); // Determine the original size of the model
+            const scaleFactor = desiredDiameter / currentDiameter; // Calculate initial scale factor
 
+            // Apply initial scaling
             model.scale.set(scaleFactor, scaleFactor, scaleFactor);
             model.position.set(...position);
             model.rotation.set(...rotation);
 
+            // Store initial model data in userData
+            model.userData = {
+                originalDiameter: currentDiameter, // Store original size
+                desiredDiameter, // Store initial desired diameter
+                position,
+                orbitRadius,
+                orbitSpeed,
+                targetName,
+                name,
+                originalPosition: [...position], // Store original position as a separate copy
+                scaleFactor,
+                rotation
+            };
+
+            // Update all child objects' userData
             model.traverse((child) => {
-                child.userData = { ...child.userData, position, orbitRadius, orbitSpeed, targetName, name, desiredDiameter, currentDiameter, scaleFactor, rotation };
-                child.name = name;
+                child.userData = { ...child.userData, ...model.userData };
+                child.name = name; // Optionally set the name on children too
             });
 
             scene.add(model);
-            models.push(model);
-
+            models.push(model); // Add model to global models list
         },
         undefined,
         (error) => {
@@ -72,6 +92,7 @@ function loadModel(url, options = {}) {
         }
     );
 }
+
 
 export function updateModelPositions() {
     models.forEach((model) => {
@@ -106,10 +127,10 @@ function createStars() {
     const starMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.1 });
 
     const starVertices = [];
-    for (let i = 0; i < 10000; i++) {
-        const x = (Math.random() - 0.5) * 2000;
-        const y = (Math.random() - 0.5) * 2000;
-        const z = (Math.random() - 0.5) * 5000;
+    for (let i = 0; i < 25000; i++) {
+        const x = (Math.random() - 0.5) * 3000;
+        const y = (Math.random() - 0.5) * 3000;
+        const z = (Math.random() - 0.5) * 4500;
         starVertices.push(x, y, z);
     }
 
@@ -125,3 +146,5 @@ export function loadModels() {
     loadPlanetaryModels();
     stars = createStars();
 }
+
+// document.addEventListener('click', onMouseClick, false);

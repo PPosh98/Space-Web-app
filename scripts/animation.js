@@ -4,6 +4,7 @@ import { updateModelPositions } from './loader.js';
 import { animateStars, orbit } from './orbit.js';
 import { cameraFollow, cameraFollowEnabled } from './camera.js';
 
+
 export function animation() {
     renderer.setAnimationLoop(animate);
 }

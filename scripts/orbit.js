@@ -18,10 +18,10 @@ export function orbit() {
             model.userData.name = clickedModel.userData.name; // Update the name too if needed
             model.userData.targetName = clickedModel.userData.targetName;
 
-            console.log(`Updated ${model.userData.name}: 
-                Orbit Radius = ${model.userData.orbitRadius}, 
-                Orbit Speed = ${model.userData.orbitSpeed}
-            `);
+            // console.log(`Updated ${model.userData.name}: 
+            //     Orbit Radius = ${model.userData.orbitRadius}, 
+            //     Orbit Speed = ${model.userData.orbitSpeed}
+            // `);
         }
 
         const orbitRadius = model.userData.orbitRadius;
@@ -29,10 +29,8 @@ export function orbit() {
         const targetName = model.userData.targetName;
 
         const target = models.find(m => m.userData.name === targetName);
-
         if (target) {
             const targetPosition = target.position;
-
             // Calculate the new position
             const time = Date.now() * 0.0001 * orbitSpeed;
             model.position.x = targetPosition.x + orbitRadius * Math.cos(time);
