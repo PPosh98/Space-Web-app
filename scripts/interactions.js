@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { camera } from './scene.js';
 import { models } from './loader.js';
-import { showProperties, updatePropertiesPosition } from './properties.js';
+import { showPlanetName } from './properties.js';
 import { getMousePosition } from './controls.js';
 
 const raycaster = new THREE.Raycaster();
@@ -13,8 +13,7 @@ export function onPointerMove() {
 
     if (intersects.length > 0) {
         const hoveredModel = intersects[0].object;
-        showProperties(hoveredModel, 'simple');
-        updatePropertiesPosition(hoveredModel);
+        showPlanetName(hoveredModel);
     } else {
         document.getElementById('planet-name-container').style.display = 'none';
     }

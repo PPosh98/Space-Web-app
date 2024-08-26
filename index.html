@@ -9,13 +9,57 @@
 </head>
 
 <body>
-    <img id="title-img" src="/svgs/orbitor-title.svg" alt="orbitor title">
+    <img id="title-img" src="/svgs/orbitor-title.svg" alt="orbitor">
     <div id="crosshair"></div>
     <div id="planet-name-container"></div>
     <div id="sidebar">
         <h1 id="sidebar-header">Properties</h1>
-        <div id="information"></div>
-    </div>
+        <div id="information">
+            <label for="nameInput">Name:</label>
+            <input type="text" id="nameInput"><br>
+
+            <label for="radiusSlider">Orbit Radius:</label>
+            <input type="range" id="radiusSlider" min="0" max="1000" step="1" 
+                oninput="document.getElementById('radiusValue').value = this.value">
+            <input type="number" id="radiusValue"
+                oninput="document.getElementById('radiusSlider').value = this.value"><br>
+
+            <label for="speedSlider">Orbit Speed:</label>
+            <input type="range" id="speedSlider" min="0" max="50" step="1"
+                oninput="document.getElementById('speedValue').value = this.value">
+            <input type="number" id="speedValue"
+                oninput="document.getElementById('speedSlider').value = this.value"><br>
+
+            <label for="positionValue">Position:</label>
+            <span id="positionValue">val</span><br>
+
+            <label for="targetNameSelect">Orbiting:</label>
+            <select id="targetNameSelect"></select><br>
+
+            <label for="sizeSlider">Size:</label>
+            <input type="range" id="sizeSlider" min="1" max="1000" step="10"
+                oninput="document.getElementById('sizeValue').value = this.value">
+            <input type="number" id="sizeValue"
+                oninput="document.getElementById('sizeSlider').value = this.value"><span>km</span><br>
+
+            <label for="rotationXSlider">Rotation X speed:</label>
+            <input type="range" id="rotationXSlider" min="0" max="500" step="5"
+                oninput="document.getElementById('rotationXValue').value = this.value">
+            <input type="number" id="rotationXValue"
+                oninput="document.getElementById('rotationXSlider').value = this.value"><br>
+
+            <label for="rotationYSlider">Rotation Y speed:</label>
+            <input type="range" id="rotationYSlider" min="0" max="500" step="5"
+                oninput="document.getElementById('rotationYValue').value = this.value">
+            <input type="number" id="rotationYValue"
+                oninput="document.getElementById('rotationYSlider').value = this.value"><br>
+
+            <label for="rotationZSlider">Rotation Z speed:</label>
+            <input type="range" id="rotationZSlider" min="0" max="500" step="5"
+                oninput="document.getElementById('rotationZValue').value = this.value">
+            <input type="number" id="rotationZValue"
+                oninput="document.getElementById('rotationZSlider').value = this.value"><br>
+        </div>
     </div>
     <script type="module" src="scripts/main.js"></script>
 </body>
