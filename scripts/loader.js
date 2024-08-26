@@ -3,7 +3,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { scene, camera } from './scene.js';
 import { setCameraFollowEnabled } from './camera.js';
 import { controls, getMousePosition } from './controls.js';
-import { closeSidebar, openSidebar, showProperties } from './properties.js';
+import { openSidebar } from './properties.js';
 import { onPointerMove } from './interactions.js';
 
 const loader = new GLTFLoader();
@@ -41,7 +41,7 @@ export function nullifyclickedModel() {
 }
 
 function loadModel(url, options = {}) {
-    const { position = [0, 0, 0], rotation = [0, 0, 0], desiredDiameter, orbitRadius = 0, orbitSpeed = 0, name, targetName = 'none' } = options;
+    const { position = [0, 0, 0], rotation = [0, 0, 0], desiredDiameter = 0, orbitRadius = 0, orbitSpeed = 0, name, targetName = 'none' } = options;
 
     loader.load(
         url,
@@ -56,13 +56,6 @@ function loadModel(url, options = {}) {
             model.scale.set(scaleFactor, scaleFactor, scaleFactor);
             model.position.set(...position);
             model.rotation.set(...rotation);
-
-            // // Set initial rotation in degrees
-            // model.rotation.set(
-            //     THREE.MathUtils.degToRad(rotation.x),
-            //     THREE.MathUtils.degToRad(rotation.y),
-            //     THREE.MathUtils.degToRad(rotation.z)
-            // );
 
             model.traverse((child) => {
                 child.userData = { ...child.userData, position, orbitRadius, orbitSpeed, targetName, name, desiredDiameter, currentDiameter, scaleFactor, rotation };
@@ -132,5 +125,3 @@ export function loadModels() {
     loadPlanetaryModels();
     stars = createStars();
 }
-
-// document.addEventListener('click', onMouseClick, false);
