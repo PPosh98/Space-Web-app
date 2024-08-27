@@ -17,11 +17,6 @@ export function orbit() {
             model.userData.orbitSpeed = clickedModel.userData.orbitSpeed;
             model.userData.name = clickedModel.userData.name; // Update the name too if needed
             model.userData.targetName = clickedModel.userData.targetName;
-
-            console.log(`Updated ${model.userData.name}: 
-                Orbit Radius = ${model.userData.orbitRadius}, 
-                Orbit Speed = ${model.userData.orbitSpeed}
-            `);
         }
 
         const orbitRadius = model.userData.orbitRadius;

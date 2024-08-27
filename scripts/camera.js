@@ -1,7 +1,5 @@
 import { camera } from './scene.js';
-import { clickedModel, diameter, nullifyclickedModel } from './loader.js';
-import { openSidebar, closeSidebar } from './properties.js';
-import { controls } from './controls.js';
+import { clickedModel, diameter } from './loader.js';
 
 export let cameraFollowEnabled = false;
 
@@ -21,14 +19,3 @@ export function setCameraFollowEnabled(isEnabled) {
     if (isEnabled) cameraFollowEnabled = true
     else cameraFollowEnabled = false
 }
-
-// export function toggleCameraFollow(event) {
-//     if (event.key === 't') { // Change 't' to any key you prefer
-//         controls.lock()
-//         cameraFollowEnabled = !cameraFollowEnabled;
-//         if (cameraFollowEnabled === false) {
-//             nullifyclickedModel();
-//             // closeSidebar()
-//         }
-//     }
-// }
