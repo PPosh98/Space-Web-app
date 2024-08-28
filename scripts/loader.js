@@ -137,10 +137,12 @@ function createStars() {
 }
 
 export function loadModels() {
-    // Load the initial scene state if available
+    let data = null
     const savedState = localStorage.getItem('sceneState');
-    const data = JSON.parse(savedState).objects;
-    updatePlanetaryModels(data)
+    if (savedState) {
+        data = JSON.parse(savedState).objects;
+        updatePlanetaryModels(data)
+    }
     loadPlanetaryModels(planetaryObjects)
     stars = createStars();
 }
