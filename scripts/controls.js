@@ -65,7 +65,7 @@ function onKeyDown(event) {
         case 'Space':
             moveUp = true;
             break;
-        case 'ControlLeft':
+        case 'KeyQ':
             moveDown = true;
             break;
     }
@@ -92,7 +92,7 @@ function onKeyUp(event) {
         case 'Space':
             moveUp = false;
             break;
-        case 'ControlLeft':
+        case 'KeyQ':
             moveDown = false;
             break;
     }
