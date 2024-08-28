@@ -122,7 +122,8 @@ export function updatePlanetNamePosition(model) {
 }
 
 export function openSidebar() {
-    sidebar.style.width = '250px';
+    sidebar.style.width = '380px';
+    sidebar.style.padding = '20px';
     showProperties(clickedModel);
     intervalId = setInterval(() => {
         autoSave(models)
@@ -132,6 +133,7 @@ export function openSidebar() {
 export function closeSidebar() {
     removeInputListeners()
     sidebar.style.width = '0px';
+    sidebar.style.padding = '0px';
     clearInterval(intervalId);
 }
 

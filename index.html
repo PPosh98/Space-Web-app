@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=New+Amsterdam&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;1,500&display=swap" rel="stylesheet">
     <title>Space Web app</title>
 </head>
 
@@ -15,50 +19,62 @@
     <div id="sidebar" onclick="event.stopPropagation();">
         <h1 id="sidebar-header">Properties</h1>
         <div id="information">
-            <label for="nameInput">Name:</label>
-            <input type="text" id="nameInput"><br>
+            <label class="flex-item" for="nameInput">Name:</label>
+            <input class="flex-item" type="text" id="nameInput">
 
-            <label for="radiusSlider">Orbit Radius:</label>
-            <input type="range" id="radiusSlider" min="0" max="1000" step="1" 
-                oninput="document.getElementById('radiusValue').value = this.value">
-            <input type="number" id="radiusValue"
-                oninput="document.getElementById('radiusSlider').value = this.value"><br>
+            <label class="flex-item" for="radiusSlider">Orbit Radius:</label>
+            <div class="flex-item">
+                <input type="range" id="radiusSlider" min="0" max="1000" step="1" 
+                    oninput="document.getElementById('radiusValue').value = this.value">
+                <input type="number" id="radiusValue"
+                    oninput="document.getElementById('radiusSlider').value = this.value">
+            </div>
+            
+            <label class="flex-item" for="speedSlider">Orbit Speed:</label>
+            <div class="flex-item">
+                <input type="range" id="speedSlider" min="0" max="50" step="1"
+                    oninput="document.getElementById('speedValue').value = this.value">
+                <input type="number" id="speedValue"
+                    oninput="document.getElementById('speedSlider').value = this.value">
+            </div>
 
-            <label for="speedSlider">Orbit Speed:</label>
-            <input type="range" id="speedSlider" min="0" max="50" step="1"
-                oninput="document.getElementById('speedValue').value = this.value">
-            <input type="number" id="speedValue"
-                oninput="document.getElementById('speedSlider').value = this.value"><br>
+            <label class="flex-item" for="positionValue">Position:</label>
+            <span class="flex-item" id="positionValue">val</span>
 
-            <label for="positionValue">Position:</label>
-            <span id="positionValue">val</span><br>
+            <label class="flex-item" for="targetNameSelect">Orbiting:</label>
+            <select class="flex-item" id="targetNameSelect"></select>
 
-            <label for="targetNameSelect">Orbiting:</label>
-            <select id="targetNameSelect"></select><br>
+            <label class="flex-item" for="sizeSlider">Size (km):</label>
+            <div class="flex-item">
+                <input type="range" id="sizeSlider" min="1" max="1000" step="10"
+                    oninput="document.getElementById('sizeValue').value = this.value">
+                <input type="number" id="sizeValue"
+                    oninput="document.getElementById('sizeSlider').value = this.value">
+            </div>
 
-            <label for="sizeSlider">Size:</label>
-            <input type="range" id="sizeSlider" min="1" max="1000" step="10"
-                oninput="document.getElementById('sizeValue').value = this.value">
-            <input type="number" id="sizeValue"
-                oninput="document.getElementById('sizeSlider').value = this.value"><span>km</span><br>
+            <label class="flex-item" for="rotationXSlider">Rotation X speed:</label>
+            <div class="flex-item">
+                <input type="range" id="rotationXSlider" min="0" max="500" step="5"
+                    oninput="document.getElementById('rotationXValue').value = this.value">
+                <input type="number" id="rotationXValue"
+                    oninput="document.getElementById('rotationXSlider').value = this.value">
+            </div>
 
-            <label for="rotationXSlider">Rotation X speed:</label>
-            <input type="range" id="rotationXSlider" min="0" max="500" step="5"
-                oninput="document.getElementById('rotationXValue').value = this.value">
-            <input type="number" id="rotationXValue"
-                oninput="document.getElementById('rotationXSlider').value = this.value"><br>
+            <label class="flex-item" for="rotationYSlider">Rotation Y speed:</label>
+            <div class="flex-item">
+                <input type="range" id="rotationYSlider" min="0" max="500" step="5"
+                    oninput="document.getElementById('rotationYValue').value = this.value">
+                <input type="number" id="rotationYValue"
+                    oninput="document.getElementById('rotationYSlider').value = this.value">
+            </div>
 
-            <label for="rotationYSlider">Rotation Y speed:</label>
-            <input type="range" id="rotationYSlider" min="0" max="500" step="5"
-                oninput="document.getElementById('rotationYValue').value = this.value">
-            <input type="number" id="rotationYValue"
-                oninput="document.getElementById('rotationYSlider').value = this.value"><br>
-
-            <label for="rotationZSlider">Rotation Z speed:</label>
-            <input type="range" id="rotationZSlider" min="0" max="500" step="5"
-                oninput="document.getElementById('rotationZValue').value = this.value">
-            <input type="number" id="rotationZValue"
-                oninput="document.getElementById('rotationZSlider').value = this.value"><br>
+            <label class="flex-item" for="rotationZSlider">Rotation Z speed:</label>
+            <div class="flex-item">
+                <input type="range" id="rotationZSlider" min="0" max="500" step="5"
+                    oninput="document.getElementById('rotationZValue').value = this.value">
+                <input type="number" id="rotationZValue"
+                    oninput="document.getElementById('rotationZSlider').value = this.value">
+            </div>
         </div>
     </div>
     <script type="module" src="scripts/main.js"></script>
