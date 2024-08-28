@@ -3,9 +3,6 @@ export const state = {
 };
 
 export function saveSceneState(models) {
-    console.log("Saving state...");
-    console.log(models);
-
     models.forEach(model => {
         const newObject = {
             id: model.userData.id,
@@ -25,7 +22,6 @@ export function saveSceneState(models) {
         } else {
             state.objects.push(newObject);
         }
-        console.log(state.objects)
     });
     return JSON.stringify(state);
 }

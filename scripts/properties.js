@@ -62,7 +62,6 @@ export function showProperties(model) {
 
 export function autoSave(models) {
     const savedState = saveSceneState(models);
-    console.log(savedState)
     localStorage.setItem('sceneState', savedState);
 }
 

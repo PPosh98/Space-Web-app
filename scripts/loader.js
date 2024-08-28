@@ -119,7 +119,6 @@ export function loadModels() {
     // Load the initial scene state if available
     const savedState = localStorage.getItem('sceneState');
     const data = JSON.parse(savedState).objects;
-    console.log(data)
     updatePlanetaryModels(data)
     loadPlanetaryModels(planetaryObjects)
     stars = createStars();
